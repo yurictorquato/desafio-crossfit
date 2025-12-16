@@ -18,12 +18,14 @@ class AtletaModel(BaseModel):
     peso: Mapped[float] = mapped_column(Float(precision=2), nullable=False)
     altura: Mapped[float] = mapped_column(Float(precision=2), nullable=False)
     sexo: Mapped[str] = mapped_column(CHAR(length=1), nullable=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     categoria_id: Mapped[int] = mapped_column(ForeignKey("tb_categorias.pk_id"))
     centro_treinamento_id: Mapped[int] = mapped_column(
         ForeignKey("tb_centros_treinamento.pk_id")
     )
-    categoria: Mapped["CategoriaModel"] = relationship(back_populates="atleta")
+
+    categoria: Mapped["CategoriaModel"] = relationship(back_populates="atleta", lazy="selectin")
     centro_treinamento: Mapped["CentroTreinamentoModel"] = relationship(
-        back_populates="atleta"
+        back_populates="atleta",
+        lazy="selectin"
     )

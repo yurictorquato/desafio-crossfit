@@ -1,13 +1,16 @@
 from typing import Annotated
 
-from contrib.schemas import BaseSchema
-from pydantic import Field
+from pydantic import Field, UUID4
+
+from app.contrib.schemas import BaseSchema
 
 
-class Categoria(BaseSchema):
-    """"""
-
+class CategoriaRequest(BaseSchema):
     nome: Annotated[
         str,
-        Field(description="Nome da Categoria", examples="Foundations", max_length=15),
+        Field(description="Nome da Categoria", examples=["Foundations", ], max_length=15),
     ]
+
+
+class CategoriaResponse(CategoriaRequest):
+    id: Annotated[UUID4, Field(description="Identificador da Categoria")]
